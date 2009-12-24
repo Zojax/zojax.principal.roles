@@ -1,0 +1,34 @@
+<div class="z-form-edit"> 
+  <h2 tal:content="context/__title__"></h2>
+  <div class="z-page-description" tal:content="context/__description__"></div>
+
+  <form action="index.html" method="post" i18n:domain="zojax.principal.roles">
+    <table class="z-table">
+      <tr>
+	<th i18n:translate="">Role</th>
+	<th i18n:translate="">Allow</th>
+	<th i18n:translate="">Deny</th>
+	<th i18n:translate="">Unset</th>
+      </tr>
+      <tr tal:repeat="role view/roles"
+	  tal:attributes="class python:repeat['role'].odd() and 'odd' or 'even'">
+	<td tal:content="role/title"></td>
+	<td><input type="radio" value="1"
+		   tal:attributes="name role/id;
+				   checked python:role['setting']==1" /></td>
+	<td><input type="radio" value="2"
+		   tal:attributes="name role/id;
+				   checked python:role['setting']==2" /></td>
+	<td><input type="radio" value="3"
+		   tal:attributes="name role/id;
+				   checked python:role['setting']==3" /></td>
+      </tr>
+    </table>
+
+    <div class="z-form-controls">
+      <hr />
+      <input type="submit" class="z-form-savebutton"
+	     name="form.save" value="Save" i18n:attributes="value" />
+    </div>
+  </form>
+</div>

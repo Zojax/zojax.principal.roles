@@ -1,0 +1,73 @@
+<configure
+   xmlns="http://namespaces.zope.org/zope"
+   xmlns:zojax="http://namespaces.zope.org/zojax"
+   xmlns:browser="http://namespaces.zope.org/browser"
+   i18n_domain="zojax.principal.roles">
+
+  <!-- portal roles configlet -->
+  <browser:defaultView
+     name="context.html"
+     for="..interfaces.IPortalRoles" />
+
+  <adapter
+     for="..interfaces.IPortalRoles *"
+     factory="zojax.controlpanel.browser.breadcrumb.ConfigletBreadcrumb" />
+
+  <zojax:pagelet
+     name="view"
+     type="wizard.step"
+     for="..interfaces.IPortalRoles
+	  zojax.content.forms.interfaces.IEditContentWizard"
+     class="zojax.wizard.step.WizardStepDisabled"
+     weight="0" />
+
+  <zojax:pagelet
+     name="permissions"
+     type="wizard.step"
+     title="Permissions"
+     for="..interfaces.IPortalRoles
+	  zojax.content.forms.interfaces.IEditContentWizard"
+     template="roles.pt"
+     class=".roles.PortalRoles"
+     permission="zojax.Configure"
+     weight="1" />
+
+  <zojax:pagelet
+     name="contents"
+     title="Roles"
+     type="wizard.step"
+     for="..interfaces.IPortalRoles
+	  zojax.content.forms.interfaces.IEditContentWizard"
+     class="zojax.content.browser.contents.ContentsStep"
+     provides="zojax.layoutform.interfaces.IPageletFormView"
+     permission="zojax.Configure"
+     weight="2" />
+
+  <zojax:pagelet
+     name="content"
+     type="wizard.step"
+     for="..interfaces.IPortalRoles
+	  zojax.content.forms.interfaces.IEditContentWizard"
+     class="zojax.wizard.step.WizardStepDisabled"
+     weight="3" />
+
+  <adapter
+     name="cancel"
+     provides="zojax.wizard.interfaces.IWizardButton"
+     for="..interfaces.IPortalRoles
+	  zojax.content.forms.interfaces.IEditContentWizard *"
+     factory="zojax.wizard.button.disabledWizardButton" />
+
+  <!-- roles -->
+  <browser:defaultView
+     name="context.html"
+     for="..interfaces.IPortalRole" />
+
+  <!-- roles preference -->
+  <zojax:pagelet
+     type="preference.editGroup"
+     for="..interfaces.IRolesPreference"
+     template="preference.pt"
+     class=".preference.EditRolesForm" />
+
+</configure>

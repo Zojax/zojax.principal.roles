@@ -1,0 +1,75 @@
+<tal:block i18n:domain="zojax.principal.roles">
+
+<h1 i18n:translate="">Permissions</h1>
+<div class="z-page-description" i18n:translate="">
+  Define permissions for each role.</div>
+
+<div class="principal-roles" tal:define="roles view/roles"
+     tal:condition="python:roles and view.permissions">
+  <div class="z-table-container">
+    <table class="z-table">
+      <thead>
+	<tr>
+	  <th></th>
+	  <th tal:repeat="role roles"
+	      tal:content="role/title"></th>
+	</tr>
+      </thead>
+      <tbody>
+	<tr class="align-center">
+	  <td class="discreet" i18n:translate="">Select all</td>
+	  <td tal:repeat="role roles">
+	    <input type="checkbox" tal:attributes="onchange string:updateRolesCheckboxes(this, 'role-${role/name}');;" />
+	  </td>
+	</tr>
+      </tbody>
+      <tbody tal:repeat="cat view/permissions">
+	<tr class="z-table-category">
+	  <td tal:content="cat/name"
+	      tal:attributes="colspan python:len(roles)+1"></td>
+	</tr>
+	<tr tal:repeat="perm cat/perms"
+	    tal:attributes="class python:repeat['perm'].odd() and 
+			    'z-table-record align-center odd' or 
+			    'z-table-record align-center even'">
+	  <th tal:content="perm/title"></th>
+	  <td tal:repeat="role roles">
+	    <input type="checkbox"
+		   tal:attributes="value perm/name;
+				   name string:role-${role/id}:list;
+				   class string:role-${role/name};
+				   checked python:perm['settings'][role['id']]" />
+	  </td>
+	</tr>
+      </tbody>
+    </table>
+  </div>
+  
+  <div class="z-form-controls">
+    <hr />
+    <input type="submit" name="form.updatePermissions" class="z-form-button"
+	   value="Update" i18n:attributes="value" />
+  </div>
+</div>
+</tal:block>
+
+<script>
+<!--
+function updateRolesCheckboxes(master, className) {
+    newState = master.checked;
+    objects = document.getElementsByTagName("input")
+    count = objects.length;
+    for(x = 0; x < count; x++) {
+        obj = objects[x];
+        if (obj.type == "checkbox") {
+            var classes = obj.className.split(" ");
+            for (var i = 0; i < classes.length; i++)
+                if (classes[i] == className) {
+                    obj.checked = newState;
+                    break;
+                }
+        }
+    }
+}
+-->
+</script>

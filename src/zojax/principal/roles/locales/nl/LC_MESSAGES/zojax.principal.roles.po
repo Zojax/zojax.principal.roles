@@ -1,0 +1,113 @@
+# #############################################################################
+#
+# Copyright (c) 2009 Zope Foundation and Contributors.
+# All Rights Reserved.
+#
+# This software is subject to the provisions of the Zope Public License,
+# Version 2.1 (ZPL).  A copy of the ZPL should accompany this distribution.
+# THIS SOFTWARE IS PROVIDED "AS IS" AND ANY AND ALL EXPRESS OR IMPLIED
+# WARRANTIES ARE DISCLAIMED, INCLUDING, BUT NOT LIMITED TO, THE IMPLIED
+# WARRANTIES OF TITLE, MERCHANTABILITY, AGAINST INFRINGEMENT, AND FITNESS
+# FOR A PARTICULAR PURPOSE.
+#
+# #############################################################################
+msgid ""
+msgstr ""
+"Project-Id-Version: Development/Unknown\n"
+"POT-Creation-Date: Wed Oct 22 01:33:01 2008\n"
+"PO-Revision-Date: 2008-10-22 10:56+0100\n"
+"Last-Translator: F. Kooman <fkooman@tuxed.net>\n"
+"Language-Team: Zope 3 Developers <zope3-dev@zope.org>\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Generated-By: zope/app/locales/extract.py\n"
+
+#: src/zojax/principal/roles/browser/configlet.pt:24
+msgid "Remove"
+msgstr "Verwijderen"
+
+#: src/zojax/principal/roles/browser/configlet.pt:29
+msgid "There are no roles."
+msgstr "Er zijn geen rollen."
+
+#: src/zojax/principal/roles/browser/role.pt:26
+msgid "Save"
+msgstr "Opslaan"
+
+#: src/zojax/principal/roles/browser/role.pt:4
+msgid "Permission"
+msgstr "Permissie"
+
+#: src/zojax/principal/roles/browser/role.pt:5
+msgid "Allow"
+msgstr "Toestaan"
+
+#: src/zojax/principal/roles/browser/role.pt:6
+msgid "Unset"
+msgstr ""
+
+#: src/zojax/principal/roles/browser/role.pt:7
+msgid "Deny"
+msgstr "Weigeren"
+
+#: src/zojax/principal/roles/browser/role.py:62
+msgid "Role permissions has been changed."
+msgstr "Roleigenschappen gewijzigd"
+
+#: src/zojax/principal/roles/configlet.py:35
+#: src/zojax/principal/roles/configure.zcml:49
+msgid "Roles container"
+msgstr "Rollencontainer"
+
+#: src/zojax/principal/roles/configure.zcml:13
+msgid "Change principal role"
+msgstr "Rol wijzigen"
+
+#: src/zojax/principal/roles/configure.zcml:18
+msgid "Default role configuration."
+msgstr "Standaardrol configuratie"
+
+#: src/zojax/principal/roles/configure.zcml:30
+msgid "Change roles"
+msgstr "Rollen wijzigen"
+
+#: src/zojax/principal/roles/configure.zcml:30
+msgid "You can change principal roles here."
+msgstr "U kunt de rollen hier wijzigen"
+
+#: src/zojax/principal/roles/configure.zcml:40
+msgid "Portal roles configuration."
+msgstr "Websiterollen configuratie"
+
+#: src/zojax/principal/roles/configure.zcml:40
+msgid "Portal roles"
+msgstr "Websiterollen"
+
+#: src/zojax/principal/roles/configure.zcml:49
+msgid "Roles"
+msgstr "Rollen"
+
+#: src/zojax/principal/roles/configure.zcml:69
+msgid "Portal role"
+msgstr "Websiterol"
+
+#: src/zojax/principal/roles/configure.zcml:69
+msgid "Role"
+msgstr "Rol"
+
+#: src/zojax/principal/roles/configure.zcml:9
+msgid "Manage portal roles"
+msgstr "Websiterollen beheren"
+
+#: src/zojax/principal/roles/interfaces.py:29
+#: src/zojax/principal/roles/interfaces.py:41
+#: src/zojax/principal/roles/configure.zcml:18
+msgid "Default role"
+msgstr "Standaardrol"
+
+#: src/zojax/principal/roles/interfaces.py:30
+#: src/zojax/principal/roles/interfaces.py:42
+msgid "Default role for portal principals."
+msgstr "Standaard rol voor website gebruikers."
+

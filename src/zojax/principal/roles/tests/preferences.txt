@@ -1,0 +1,52 @@
+===========================
+Roles Principal preferences
+===========================
+
+  >>> from zope import component
+  >>> from zope.securitypolicy.interfaces import IPrincipalRoleMap
+  >>> from zojax.principal.roles.tests.tests import principalRoles
+  >>> site = principalRoles.setup.getRootFolder()
+
+  >>> from zope.testbrowser.testing import Browser
+
+  >>> actor = Browser()
+  >>> actor.handleErrors = False
+  >>> actor.addHeader("Authorization", "Basic mgr:mgrpw")
+
+User can't change itsown role.
+
+  >>> actor.open("http://localhost/preferences/")
+  >>> 'Change roles' not in actor.contents
+  True
+
+Manager can change roles in principals management
+
+  >>> map = IPrincipalRoleMap(site)
+  >>> map.getPrincipalsAndRoles()
+  []
+
+  >>> actor.open("http://localhost/settings/principals/zope.user/")
+  >>> print actor.contents
+  <html>
+  ...
+  <div class="z-listing-details">
+     <a href="membership/">
+    	Membership preferences</a>
+     <div>These are all the preferences related to portal membership. &nbsp;</div>
+  ...
+  </html>
+
+  >>> actor.getLink('Membership preferences').click()
+  >>> actor.getControl(name="zope.Manager").value = ['1']
+  >>> actor.getControl(name="zope.Member").value = ['2']
+  >>> actor.getControl(name="form.save").click()
+
+  >>> IPrincipalRoleMap(site).getPrincipalsAndRoles()
+  [(u'zope.Manager', 'zope.user', PermissionSetting: Allow), (u'zope.Member', 'zope.user', PermissionSetting: Deny)]
+
+  >>> actor.getControl(name="zope.Manager").value = ['3']
+  >>> actor.getControl(name="zope.Member").value = ['3']
+  >>> actor.getControl(name="form.save").click()
+
+  >>> IPrincipalRoleMap(site).getPrincipalsAndRoles()
+  []

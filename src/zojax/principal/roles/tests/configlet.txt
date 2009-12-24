@@ -1,0 +1,185 @@
+======================
+Portal roles configlet
+======================
+
+  >>> from zope import interface, component
+  >>> from zope.app.component.hooks import setSite
+  >>> from zope.proxy import sameProxiedObjects
+  >>> from zope.security.interfaces import IPermission
+  >>> from zope.app.security.interfaces import IAuthentication
+  >>> from zope.securitypolicy.interfaces import IRolePermissionMap
+  >>> from zope.securitypolicy.interfaces import IRole, IPrincipalRoleManager
+  >>> from zojax.security.interfaces import IExtendedGrantInfo
+  >>> from zope.testbrowser.testing import Browser
+  >>> from zojax.security.interfaces import IPublicPermission
+  >>> from zojax.principal.roles.interfaces import IPortalRoles
+  >>> from zojax.principal.roles.tests.tests import IDefaultPermissionCategory
+
+  >>> root = getRootFolder()
+  >>> sm = root.getSiteManager()
+
+  >>> actor = Browser()
+  >>> actor.handleErrors = False
+  >>> actor.addHeader("Authorization", "Basic mgr:mgrpw")
+
+
+Member default role
+===================
+
+  >>> grantInfo = IExtendedGrantInfo(root)
+  >>> grantInfo.getRolesForPrincipal('zope.user')
+  []
+
+  >>> actor.open("http://localhost/settings/")
+  >>> actor.getLink('Default role').click()
+  >>> actor.getControl(name='form.widgets.roles:list').value=['zope.Member']
+  >>> actor.getControl(name='form.buttons.save').click()
+
+  >>> grantInfo = IExtendedGrantInfo(root)
+  >>> grantInfo.getRolesForPrincipal('zope.user')
+  []
+
+  >>> sm.getUtility(IAuthentication).prefix = ''
+  >>> grantInfo.getRolesForPrincipal('zope.user')
+  [('zope.Member', PermissionSetting: Allow)]
+
+
+Portal role
+===========
+
+  >>> interface.alsoProvides(
+  ...     sm.getUtility(IPermission, 'test.permission1'),
+  ...     IPublicPermission, IDefaultPermissionCategory)
+  >>> interface.alsoProvides(
+  ...     sm.getUtility(IPermission, 'test.permission2'),
+  ...     IPublicPermission, IDefaultPermissionCategory)
+
+  >>> actor.getLink('Portal roles').click()
+
+
+Add role
+--------
+
+  >>> actor.open('http://localhost/settings/principals/roles/+/principal.portalrole/')
+  >>> actor.getControl('Title').value = u'Test role'
+  >>> actor.getControl('Content short name').value = 'test.role'
+  >>> actor.getControl(name="content.add.buttons.add").click()
+  >>> actor.getLink('Portal roles').click()
+
+  >>> role = sm.getUtility(IPortalRoles)['test.role']
+  >>> roleId = role.id
+
+  >>> from zope.securitypolicy.interfaces import IRole
+  >>> sameProxiedObjects(sm.getUtility(IRole, roleId), role)
+  True
+
+  >>> print actor.contents
+  <html>
+  ...
+  <tbody>
+        <tr class="z-table-category">
+          <td colspan="5">Default</td>
+        </tr>
+        <tr class="z-table-record align-center even">
+          <th>Test permission 1</th>
+          <td>
+            <input type="checkbox" value="test.permission1" name="role-zope.Anonymous:list" class="role-zope_Anonymous" />
+          </td> <td>
+            <input type="checkbox" value="test.permission1" name="role-zope.Manager:list" class="role-zope_Manager" />
+          </td> <td>
+            <input type="checkbox" value="test.permission1" name="role-zope.Member:list" class="role-zope_Member" />
+          </td> <td>
+            <input type="checkbox" value="test.permission1" name="role-role...:list" class="role-role..." />
+          </td>
+        </tr> <tr class="z-table-record align-center odd">
+          <th>Test permission 2</th>
+          <td>
+            <input type="checkbox" value="test.permission2" name="role-zope.Anonymous:list" class="role-zope_Anonymous" />
+          </td> <td>
+            <input type="checkbox" value="test.permission2" name="role-zope.Manager:list" class="role-zope_Manager" />
+          </td> <td>
+            <input type="checkbox" value="test.permission2" name="role-zope.Member:list" class="role-zope_Member" />
+          </td> <td>
+            <input type="checkbox" value="test.permission2" name="role-role...:list" class="role-role..." />
+          </td>
+        </tr>
+  </tbody>
+  ...
+  </html>
+
+
+Modify role's permissions
+-------------------------
+
+  >>> roleManager = IPrincipalRoleManager(root)
+  >>> roleManager.assignRoleToPrincipal(roleId, 'zope.user')
+
+  >>> grantInfo = IExtendedGrantInfo(root)
+  >>> grantInfo.getRolesForPermission('test.permission1')
+  [('zope.Manager', PermissionSetting: Allow)]
+
+  >>> actor.getControl(name="role-%s:list"%roleId).value = ['test.permission1']
+  >>> actor.getControl(name="form.updatePermissions").click()
+
+  >>> roles = grantInfo.getRolesForPermission('test.permission1')
+  >>> roles.sort()
+  >>> for rec in roles:
+  ...     print rec
+  (u'role...', PermissionSetting: Allow)
+  ('zope.Manager', PermissionSetting: Allow)
+
+  >>> roles = grantInfo.getRolesForPermission('test.permission2')
+  >>> roles.sort()
+  >>> for rec in roles:
+  ...     print rec
+  ('zope.Manager', PermissionSetting: Allow)
+
+  >>> actor.getControl(name="role-%s:list"%roleId).value = ['test.permission2']
+  >>> actor.getControl(name="form.updatePermissions").click()
+
+  >>> roles = grantInfo.getRolesForPermission('test.permission1')
+  >>> roles.sort()
+  >>> for rec in roles:
+  ...     print rec
+  ('zope.Manager', PermissionSetting: Allow)
+
+  >>> roles = grantInfo.getRolesForPermission('test.permission2')
+  >>> roles.sort()
+  >>> for rec in roles:
+  ...     print rec
+  (u'role...', PermissionSetting: Allow)
+  ('zope.Manager', PermissionSetting: Allow)
+
+
+Rename role
+-----------
+
+  >>> actor.getLink('Roles').click()
+  >>> actor.getControl(name="ids:list").value = ['test.role']
+  >>> actor.getControl(name="form.buttons.rename").click()
+
+  >>> actor.getControl(name="newIds:list").value = 'test.role1'
+  >>> actor.getControl(name="form.buttons.apply").click()
+
+  >>> roles = grantInfo.getRolesForPermission('test.permission1')
+  >>> roles.sort()
+  >>> for rec in roles:
+  ...     print rec
+  ('zope.Manager', PermissionSetting: Allow)
+
+  >>> roles = grantInfo.getRolesForPermission('test.permission2')
+  >>> roles.sort()
+  >>> for rec in roles:
+  ...     print rec
+  (u'role...', PermissionSetting: Allow)
+  ('zope.Manager', PermissionSetting: Allow)
+
+
+Remove role
+-----------
+
+  >>> actor.getControl(name='ids:list').value = ['test.role1']
+  >>> actor.getControl(name="form.buttons.delete").click()
+
+  >>> sm.queryUtility(IRole, roleId) is None
+  True

@@ -1,0 +1,60 @@
+<configure
+   xmlns="http://namespaces.zope.org/zope"
+   xmlns:zojax="http://namespaces.zope.org/zojax"
+   i18n_domain="zojax.principal.roles">
+
+  <!-- portal roles configlet -->
+  <zojax:configlet
+     name="principals.roles"
+     title="Portal roles"
+     description="Portal roles configuration."
+     schema=".interfaces.IPortalRoles"
+     class=".configlet.PortalRoles"
+     permission="zojax.ManageRoles">
+    <require
+       permission="zope.View"
+       attributes="title description"
+       interface="zope.app.container.interfaces.IReadContainer" />
+    <require
+       permission="zojax.ManageRoles"
+       interface="zope.app.container.interfaces.IWriteContainer" />
+  </zojax:configlet>
+
+  <zojax:content
+     title="Portal roles"
+     name="principal.rolecontainer"
+     schema=".interfaces.IPortalRoles"
+     class=".configlet.PortalRoles"
+     contains="principal.portalrole"
+     type="zojax.content.type.interfaces.IInactiveType" />
+
+  <class class=".configlet.PortalRoles">
+    <implements 
+       interface="zojax.content.type.interfaces.IEmptyNamesNotAllowed" />
+    <implements
+       interface="zojax.content.type.interfaces.IContainerContentsAware" />
+  </class>
+
+  <!-- portal role -->
+  <zojax:content
+     title="Role"
+     name="principal.portalrole"
+     schema=".interfaces.IPortalRole"
+     description="Portal role"
+     containers="principal.rolecontainer"
+     class=".role.PortalRole" />
+
+  <class class=".role.PortalRole">
+    <require
+       permission="zope.Public"
+       attributes="id"
+       interface="zojax.content.type.interfaces.IItem" />
+    <require
+       permission="zojax.ManageRoles"
+       set_schema="zojax.content.type.interfaces.IItem" />
+  </class>
+
+  <subscriber handler=".role.portalRoleAdded" />
+  <subscriber handler=".role.portalRoleRemoved" />
+
+</configure>

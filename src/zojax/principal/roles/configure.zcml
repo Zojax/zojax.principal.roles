@@ -1,0 +1,53 @@
+<configure
+   xmlns="http://namespaces.zope.org/zope"
+   xmlns:i18n="http://namespaces.zope.org/i18n"
+   xmlns:zojax="http://namespaces.zope.org/zojax"
+   i18n_domain="zojax.principal.roles">
+
+  <permission
+     id="zojax.ManageRoles"
+     title="Manage portal roles" />
+
+  <permission
+     id="zojax.ChangePrincipalRole"
+     title="Change principal role" />
+
+  <!-- default role configlet -->
+  <zojax:configlet
+     name="principals.defaultrole"
+     title="Default role"
+     description="Default role configuration."
+     schema=".interfaces.IDefaultPortalRole" />
+
+  <!-- member default role -->
+  <adapter
+     name="zojax.principal.defaultrole"
+     factory=".defaultroles.DefaultPrincipalRoleMap" />
+
+  <!-- principal role preference -->
+  <zojax:preferenceGroup
+     id="membership.roles"
+     title="Change roles"
+     description="You can change principal roles here."
+     schema=".interfaces.IRolesPreference"
+     class=".preference.RolesPreference"
+     permission="zojax.ChangePrincipalRole" />
+
+  <subscriber handler=".subscribers.personalRoleModified" />
+
+  <!-- roles configlet -->
+  <include file="configlet.zcml" />
+
+  <!-- browser views -->
+  <include package=".browser" />
+
+  <!-- translations -->
+  <i18n:registerTranslations directory="locales"/>
+
+  <!-- generations -->
+  <utility
+     name="zojax.principal.roles"
+     provides="zope.app.generations.interfaces.ISchemaManager"
+     component=".generations.schemaManager" />
+
+</configure>

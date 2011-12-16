@@ -1,0 +1,120 @@
+##############################################################################
+#
+# Copyright (c) 2003-2004 Zope Corporation and Contributors.
+# All Rights Reserved.
+#
+# This software is subject to the provisions of the Zope Public License,
+# Version 2.1 (ZPL).  A copy of the ZPL should accompany this distribution.
+# THIS SOFTWARE IS PROVIDED "AS IS" AND ANY AND ALL EXPRESS OR IMPLIED
+# WARRANTIES ARE DISCLAIMED, INCLUDING, BUT NOT LIMITED TO, THE IMPLIED
+# WARRANTIES OF TITLE, MERCHANTABILITY, AGAINST INFRINGEMENT, AND FITNESS
+# FOR A PARTICULAR PURPOSE.
+#
+##############################################################################
+msgid ""
+msgstr ""
+"Project-Id-Version: Development/Unknown\n"
+"POT-Creation-Date: Thu Dec  8 23:21:36 2011\n"
+"PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
+"Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
+"Language-Team: Zope 3 Developers <zope3-dev@zope.org>\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Generated-By: zope/app/locales/extract.py\n"
+
+#: src/zojax/principal/roles/browser/preference.pt:10
+msgid "Allow"
+msgstr ""
+
+#: src/zojax/principal/roles/browser/preference.pt:11
+msgid "Deny"
+msgstr ""
+
+#: src/zojax/principal/roles/browser/preference.pt:12
+msgid "Default"
+msgstr ""
+
+#: src/zojax/principal/roles/browser/preference.pt:35
+msgid "Save"
+msgstr ""
+
+#: src/zojax/principal/roles/browser/preference.py:48
+msgid "Roles have been changed."
+msgstr ""
+
+#: src/zojax/principal/roles/browser/roles.pt:20
+msgid "Select all"
+msgstr ""
+
+#: src/zojax/principal/roles/browser/roles.pt:3
+msgid "Permissions"
+msgstr ""
+
+#: src/zojax/principal/roles/browser/roles.pt:4
+msgid "Define permissions for each role."
+msgstr ""
+
+#: src/zojax/principal/roles/browser/roles.pt:50
+msgid "Update"
+msgstr ""
+
+#: src/zojax/principal/roles/browser/roles.py:81
+msgid "Roles permissions have been updated."
+msgstr ""
+
+#: src/zojax/principal/roles/configlet.py:27
+#: src/zojax/principal/roles/interfaces.py:53
+msgid "Roles"
+msgstr ""
+
+#: src/zojax/principal/roles/configlet.zcml:39
+msgid "Portal role"
+msgstr ""
+
+#: src/zojax/principal/roles/configlet.zcml:39
+#: src/zojax/principal/roles/browser/preference.pt:9
+msgid "Role"
+msgstr ""
+
+#: src/zojax/principal/roles/configlet.zcml:7
+msgid "Portal roles configuration."
+msgstr ""
+
+#: src/zojax/principal/roles/configlet.zcml:7
+#: src/zojax/principal/roles/configlet.zcml:23
+msgid "Portal roles"
+msgstr ""
+
+#: src/zojax/principal/roles/configure.zcml:11
+msgid "Change principal role"
+msgstr ""
+
+#: src/zojax/principal/roles/configure.zcml:16
+msgid "Default role configuration."
+msgstr ""
+
+#: src/zojax/principal/roles/configure.zcml:16
+msgid "Default role"
+msgstr ""
+
+#: src/zojax/principal/roles/configure.zcml:28
+msgid "You can change principal roles here."
+msgstr ""
+
+#: src/zojax/principal/roles/configure.zcml:28
+msgid "Change roles"
+msgstr ""
+
+#: src/zojax/principal/roles/configure.zcml:7
+msgid "Manage portal roles"
+msgstr ""
+
+#: src/zojax/principal/roles/interfaces.py:41
+msgid "Default roles"
+msgstr ""
+
+#: src/zojax/principal/roles/interfaces.py:42
+msgid "Select default roles for portal principals."
+msgstr ""
+

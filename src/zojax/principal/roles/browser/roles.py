@@ -15,12 +15,13 @@
 
 $Id$
 """
-from zope import interface
+# from zope import interface
 from zope.proxy import sameProxiedObjects, removeAllProxies
 from zope.component import getUtilitiesFor
 from zope.app.component.hooks import getSite
 from zope.security.interfaces import IPermission
-from zope.securitypolicy.interfaces import Allow, Unset, IRolePermissionManager
+from zope.securitypolicy.interfaces import Allow, IRolePermissionManager
+# from zope.securitypolicy.interfaces import Unset
 
 from zojax.wizard.step import WizardStep
 from zojax.statusmessage.interfaces import IStatusMessage
@@ -41,6 +42,8 @@ class PortalRoles(WizardStep):
         roles = []
         for name, role in getUtilitiesFor(IPublicRole):
             if IManagerRole.providedBy(role):
+                continue
+            if role.title != 'Site Manager' and not role.id:
                 continue
 
             roles.append((role.title,
@@ -68,7 +71,7 @@ class PortalRoles(WizardStep):
 
             for role in roles:
                 roleId = role['id']
-                settings = request.get(u'role-%s'%roleId, ())
+                settings = request.get(u'role-%s' % roleId, ())
 
                 for perm in permissions:
                     permId = perm['name']
@@ -100,7 +103,7 @@ class PortalRoles(WizardStep):
 
         categories.sort()
         self.permissions = [
-            {'name': name, 'desc':desc, 'perms': perms}
+            {'name': name, 'desc': desc, 'perms': perms}
             for name, desc, cat, perms in categories if perms]
 
     def isAvailable(self):

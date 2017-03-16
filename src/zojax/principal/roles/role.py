@@ -22,7 +22,7 @@ from zope.component import getUtility
 from zope.proxy import removeAllProxies
 from zope.app.component.hooks import getSite
 from zope.securitypolicy.interfaces import IRolePermissionManager
-from zope.app.intid.interfaces import IIntIds,IIntIdAddedEvent,IIntIdRemovedEvent
+from zope.app.intid.interfaces import IIntIds, IIntIdAddedEvent, IIntIdRemovedEvent
 from zojax.content.type.item import PersistentItem
 
 from interfaces import IPortalRole
@@ -37,7 +37,10 @@ class PortalRole(PersistentItem):
 
     @getproperty
     def id(self):
-        return u'role%s'%getUtility(IIntIds).getId(self)
+        try:
+            return u'role%s' % getUtility(IIntIds).getId(self)
+        except KeyError:
+            pass
 
 
 @component.adapter(IPortalRole, IIntIdAddedEvent)
